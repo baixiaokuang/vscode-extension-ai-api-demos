@@ -24,7 +24,7 @@
         "displayName": "Tab Count",
         "canBeReferencedInPrompt": true,
         "toolReferenceName": "tabCount",
-        "icon": "$(files)",
+        "icon": "assets/calculator.svg",
         "userDescription": "Count tabs in current VS Code tab group.",
         "modelDescription": "Use this tool to count the number of tabs in current VS Code tab group, an integer will be returned.",
         "inputSchema": {

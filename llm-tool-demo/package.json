@@ -17,6 +17,27 @@
         "command": "llm-tool-demo.helloWorld",
         "title": "Hello World"
       }
+    ],
+    "languageModelTools": [
+      {
+        "name": "ai-api-demos_tabCount",
+        "displayName": "Tab Count",
+        "canBeReferencedInPrompt": true,
+        "toolReferenceName": "tabCount",
+        "icon": "$(files)",
+        "userDescription": "Count tabs in current VS Code tab group.",
+        "modelDescription": "Use this tool to count the number of tabs in current VS Code tab group, an integer will be returned.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "tabGroup": {
+              "type": "number",
+              "description": "The index of the tab group to check. This is optional - if not specified, the active tab group will be checked.",
+              "default": 0
+            }
+          }
+        }
+      }
     ]
   },
   "scripts": {

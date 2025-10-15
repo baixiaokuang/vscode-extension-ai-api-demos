@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "llm-call-demo.helloWorld",
-        "title": "Hello World"
+        "command": "llm-call-demo.insertTemplate",
+        "title": "Insert Template"
       }
     ]
   },

@@ -17,7 +17,11 @@ export function activate(context: vscode.ExtensionContext) {
   );
   const dog = vscode.chat.createChatParticipant(DOG_PARTICIPANT_ID, handler);
   dog.iconPath = vscode.Uri.joinPath(context.extensionUri, "assets", "dog.svg");
+  dog.followupProvider = {
+    provideFollowups: followupsProvider,
+  };
 }
+
 const handler: vscode.ChatRequestHandler = async (
   request: vscode.ChatRequest,
   context: vscode.ChatContext,
@@ -57,7 +61,22 @@ const handler: vscode.ChatRequestHandler = async (
   } catch (err) {
     console.log(err);
   }
-  return { metadata: { command: "" } };
+  return { metadata: { command: request.command || "" } };
+};
+
+const followupsProvider = (
+  result: IDogChatResult,
+  context: vscode.ChatContext,
+  token: vscode.CancellationToken
+): vscode.ProviderResult<vscode.ChatFollowup[]> => {
+  if (result.metadata.command === "randomTeach") {
+    return [
+      {
+        prompt: "let us play",
+        label: vscode.l10n.t("Play with the dog"),
+      } satisfies vscode.ChatFollowup,
+    ];
+  }
 };
 
 export function deactivate() {}

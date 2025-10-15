@@ -1,11 +1,8 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "llm-tool-demo"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "chat-participant-demo"
+    }
+  ],
+  "settings": {}
 }

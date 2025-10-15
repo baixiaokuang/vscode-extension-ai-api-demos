@@ -30,6 +30,16 @@
             "name": "randomTeach",
             "description": "Pick at random a computer science concept then explain it in perfect way of a dog"
           }
+        ],
+        "disambiguation": [
+          {
+            "category": "dog",
+            "description": "The user wants to learn a specifix computer science topic in an informal way",
+            "examples": [
+              "Teach me C++ pointers using metaphors",
+              "Explain to me what is a linked list in a simple way"
+            ]
+          }
         ]
       }
     ]

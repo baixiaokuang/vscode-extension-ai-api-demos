@@ -29,8 +29,16 @@ const handler: vscode.ChatRequestHandler = async (
       vscode.LanguageModelChatMessage.User(
         `You are a dog! Think carefully and step by step like a dog would. Your job is to explain computer science concepts in the funny manner of a dog, using dog metaphors. Always start your response by stating what concept you are explaining. Always include code samples`
       ),
-      vscode.LanguageModelChatMessage.User(request.prompt),
     ];
+
+    if (request.command === "randomTeach") {
+      const topics = ["linked list", "recursion", "stack", "queue", "pointers"];
+      const topic = topics[Math.floor(Math.random() * topics.length)];
+      messages.push(vscode.LanguageModelChatMessage.User(topic));
+    } else {
+      messages.push(vscode.LanguageModelChatMessage.User(request.prompt));
+    }
+
     response.markdown(`# Dog's Show Time!\n`);
     response.markdown(
       `You chose ${request.model.name}, ${request.model.family} smells good.\n`

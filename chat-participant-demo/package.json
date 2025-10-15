@@ -24,7 +24,13 @@
         "name": "my-participant",
         "fullName": "My Participant",
         "description": "What can I teach you?",
-        "isSticky": true
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "randomTeach",
+            "description": "Pick at random a computer science concept then explain it in perfect way of a dog"
+          }
+        ]
       }
     ]
   },

@@ -53,6 +53,7 @@ const handler: vscode.ChatRequestHandler = async (
       title: vscode.l10n.t("Bark!"),
     });
 
+    response.progress("Begging for LLM response...");
     const chatResponse = await request.model.sendRequest(messages, {}, token);
 
     for await (const fragment of chatResponse.text) {

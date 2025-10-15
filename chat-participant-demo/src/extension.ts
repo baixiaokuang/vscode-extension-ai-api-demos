@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 
 const DOG_PARTICIPANT_ID = "chat-participant-demo.my-participant";
+const COMMAND_ID = "chat-participant-demo.helloWorld";
 
 interface IDogChatResult extends vscode.ChatResult {
   metadata: {
@@ -9,6 +10,11 @@ interface IDogChatResult extends vscode.ChatResult {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+  context.subscriptions.push(
+    vscode.commands.registerCommand(COMMAND_ID, () => {
+      vscode.window.showInformationMessage("Bark!");
+    })
+  );
   const dog = vscode.chat.createChatParticipant(DOG_PARTICIPANT_ID, handler);
   dog.iconPath = vscode.Uri.joinPath(context.extensionUri, "assets", "dog.svg");
 }
@@ -29,6 +35,12 @@ const handler: vscode.ChatRequestHandler = async (
     response.markdown(
       `You chose ${request.model.name}, ${request.model.family} smells good.\n`
     );
+
+    response.button({
+      command: COMMAND_ID,
+      title: vscode.l10n.t("Bark!"),
+    });
+
     const chatResponse = await request.model.sendRequest(messages, {}, token);
 
     for await (const fragment of chatResponse.text) {

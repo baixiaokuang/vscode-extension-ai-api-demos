@@ -12,15 +12,15 @@ export class VercelProvider implements vscode.LanguageModelChatProvider {
   ): vscode.ProviderResult<vscode.LanguageModelChatInformation[]> {
     return [
       {
-        id: "gemini-2.5-flash",
-        name: "Gemini 2.5 Flash",
-        family: "gemini",
-        version: "",
+        id: "gpt-5-nao",
+        name: "GPT-5 nano",
+        family: "gpt",
+        version: "2025-08-07",
         detail: "Vercel AI Gateway",
         tooltip: "Provided by Vercel AI Gateway",
-        maxInputTokens: 1024,
-        maxOutputTokens: 1024,
-        capabilities: {},
+        maxInputTokens: 272000,
+        maxOutputTokens: 128000,
+        capabilities: { imageInput: true, toolCalling: true },
       },
     ];
   }
@@ -42,6 +42,16 @@ export class VercelProvider implements vscode.LanguageModelChatProvider {
     text: string | vscode.LanguageModelChatRequestMessage,
     token: vscode.CancellationToken
   ) {
-    return 42;
+    if (typeof text === "string") {
+      return Math.ceil(text.length / 4);
+    } else {
+      let num = 0;
+      for (const part of text.content) {
+        if (part instanceof vscode.LanguageModelTextPart) {
+          num += Math.ceil(part.value.length / 4);
+        }
+      }
+      return num;
+    }
   }
 }

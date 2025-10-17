@@ -2,6 +2,9 @@ import * as vscode from "vscode";
 
 export class VercelProvider implements vscode.LanguageModelChatProvider {
   static readonly vendor = "vercel-ai-gateway";
+  static readonly secretKey = "llm-provider-demo.apiKey";
+
+  constructor(private readonly secrets: vscode.SecretStorage) {}
 
   provideLanguageModelChatInformation(
     options: vscode.PrepareLanguageModelChatModelOptions,
@@ -29,6 +32,8 @@ export class VercelProvider implements vscode.LanguageModelChatProvider {
     progress: vscode.Progress<vscode.LanguageModelResponsePart>,
     token: vscode.CancellationToken
   ) {
+    const apiKey = await this.secrets.get(VercelProvider.secretKey);
+    console.log(apiKey);
     progress.report(new vscode.LanguageModelTextPart("Hello World!"));
   }
 

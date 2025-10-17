@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "llm-provider-demo.helloWorld",
-        "title": "Hello World"
+        "command": "llm-provider-demo.manage",
+        "title": "Update Vercel AI Gateway key"
       }
     ],
     "languageModelChatProviders": [

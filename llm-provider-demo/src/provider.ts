@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { streamText, createGateway, ModelMessage } from "ai";
 
 export class VercelProvider implements vscode.LanguageModelChatProvider {
   static readonly vendor = "vercel-ai-gateway";
@@ -12,7 +13,7 @@ export class VercelProvider implements vscode.LanguageModelChatProvider {
   ): vscode.ProviderResult<vscode.LanguageModelChatInformation[]> {
     return [
       {
-        id: "gpt-5-nao",
+        id: "openai/gpt-5-nano",
         name: "GPT-5 nano",
         family: "gpt",
         version: "2025-08-07",
@@ -35,6 +36,32 @@ export class VercelProvider implements vscode.LanguageModelChatProvider {
     const apiKey = await this.secrets.get(VercelProvider.secretKey);
     console.log(apiKey);
     progress.report(new vscode.LanguageModelTextPart("Hello World!"));
+
+    const gateway = createGateway({ apiKey });
+
+    let prompt: ModelMessage[] = [];
+    for (const message of messages) {
+      let str = "";
+      for (const item of message.content) {
+        if (item instanceof vscode.LanguageModelTextPart) {
+          str += item.value;
+        }
+      }
+      prompt.push({
+        role: "user",
+        content: str,
+      });
+    }
+    const { textStream } = streamText({
+      model: gateway("gpt-5-nano"),
+      prompt,
+    });
+    for await (const chunk of textStream) {
+      progress.report(new vscode.LanguageModelTextPart(chunk));
+      if (token.isCancellationRequested) {
+        break;
+      }
+    }
   }
 
   async provideTokenCount(

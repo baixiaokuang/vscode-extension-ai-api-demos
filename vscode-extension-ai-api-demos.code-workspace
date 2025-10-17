@@ -4,5 +4,7 @@
       "path": "llm-provider-demo"
     }
   ],
-  "settings": {}
+  "settings": {
+    "typescript.tsdk": "node_modules\\typescript\\lib"
+  }
 }
